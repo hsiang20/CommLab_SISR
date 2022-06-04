@@ -3,6 +3,7 @@
 clear;
 img=imread("standard_test_images\standard_test_images\lena_gray_256.tif");
 img_low=double(img);
+% imshow(img);
 %% ==== down sampling =====================================================
 % first down sampling with NNABI method 
 factor=1/2;
@@ -93,6 +94,8 @@ Res1=zeros(N*factor,M*factor);
 Res2=zeros(N*factor,M*factor);
 img_low=wextend(2,'sp0',img_low,1);
 img_low=img_low(2:end,2:end,:);
+figure;
+imshow(uint8(Res))
 %% ==== main loop =========================================================
 for i = 1:N*factor
     for j = 1:M*factor
