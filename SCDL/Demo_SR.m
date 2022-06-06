@@ -17,9 +17,9 @@ clear all; clc;
 % image_list = {'The_Big_Bang_Theory1_S19E01_0248_wanted.png';
 %     'The_Simpsons_S19E01_0003_wanted.png'
 %     };
-image_list = {'Lena128.png'};
+image_list = {'Lena.png'};
 for i = 1:size(image_list,1)
-    fn_full = fullfile(sprintf('Data/Testing/%s_junk.png',image_list{i}(1:end-4)));
+    fn_full = fullfile(sprintf('Data/Testing/%s_coupled_10000.png',image_list{i}(1:end-4)));
     if exist(fn_full,'file')
         continue;
     end
@@ -33,7 +33,14 @@ for i = 1:size(image_list,1)
     maxIter = 20;                   % if 0, do not use backprojection
 
     % load dictionary
-    load('Dictionary_new/rand_dict.mat');
+%     load('Dictionary/D_1024_0.15_5.mat');
+    load('Dictionary_new/coupled_dict.mat');
+
+%     im_adapt = imread('Data/Testing/Lenna_adaptive_interpolation_low_bicubic.png');
+%     im_adapt_ycbcr = rgb2ycbcr(im_adapt);
+%     im_adapt_cb = im_adapt_ycbcr(:, :, 2);
+%     im_adapt_cr = im_adapt_ycbcr(:, :, 3);
+
 
     % change color space, work on illuminance only
     im_l_ycbcr = rgb2ycbcr(im_l);
@@ -51,6 +58,9 @@ for i = 1:size(image_list,1)
 
     im_h_cb = imresize(im_l_cb, [nrow, ncol], 'bicubic');
     im_h_cr = imresize(im_l_cr, [nrow, ncol], 'bicubic');
+
+%     im_h_cb = im_adapt_cb;
+%     im_h_cr = im_adapt_cr;
 
     im_h_ycbcr = zeros([nrow, ncol, 3]);
     im_h_ycbcr(:, :, 1) = im_h_y;
