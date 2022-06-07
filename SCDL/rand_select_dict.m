@@ -23,5 +23,5 @@ Dh = Dh(:, 1:dict_size);
 Dl = Dl(:, 1:dict_size);
 
 % dict_path = ['Dictionary_new/D_' num2str(dict_size) '_' num2str(lambda) '_' num2str(patch_size) '_s' num2str(upscale) '.mat' ];
-dict_path = 'Dictionary_new/rand_dict.mat';
+dict_path = 'Dictionary_new/rand_dict_human_face.mat';
 save(dict_path, 'Dh', 'Dl');

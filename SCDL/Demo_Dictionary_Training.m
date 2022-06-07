@@ -15,16 +15,16 @@
 clear all; clc; close all;
 addpath(genpath('RegularizedSC'));
 
-TR_IMG_PATH = 'Data/Training';
+TR_IMG_PATH = 'Data/Training_human_face';
 
-dict_size   = 512;          % dictionary size
+dict_size   = 1024;          % dictionary size
 lambda      = 0.15;         % sparsity regularization
 patch_size  = 5;            % image patch size
 nSmp        = 100000;       % number of patches to sample
 upscale     = 2;            % upscaling factor
 
 % randomly sample image patches
-[Xh, Xl] = rnd_smp_patch(TR_IMG_PATH, '*.bmp', patch_size, nSmp, upscale);
+[Xh, Xl] = rnd_smp_patch(TR_IMG_PATH, '*.jpg', patch_size, nSmp, upscale);
 
 % prune patches with small variances, threshould chosen based on the
 % training data
