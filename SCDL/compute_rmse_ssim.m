@@ -1,33 +1,50 @@
 % read ground truth image
 im = imread('Data/Testing/Lena_gnd.bmp');
-pics = {'Data/Testing/Lena_bicubic.png',...
-    'Data/Testing/Lena_res.png',...
+pics = {'Data/Testing/Lena128_res.png',...
+    'Data/Testing/lena_bicubic.png',...
     'Data/Testing/Lena128_gauss_filt_025_res.png',...
     'Data/Testing/Lena128_gauss_filt_res.png',...
     'Data/Testing/Lena128_lambda_1_res.png',...
     'Data/Testing/Lena128_lambda_004_res.png',...
     'Data/Testing/Lena128_rand_dict_res.png',...
+    'Data/Testing/Lena128_single_dict.png',...
+    'Data/Testing/Lena128_sobel_res.png',...
     'Data/Testing/Lena128_unity_res.png',...
-    'Data/Testing/Lena128_sobel_res.png'};
+    'Data/Testing/Lenna_adaptive_interpolation_high.png',...
+    'Data/Testing/Lenna_adaptive_interpolation_low.png',...
+    'Data/Testing/Lena_high_adapt.png'...,
+    'Data/Testing/Lena_coupled_10000.png'...
+    };
 im_test = zeros(512, 512, 3, length(pics));
-size(im_test)
+% size(im_test)
 for i=1:length(pics)
     im_test(:, :, :, i) = imread(char(pics(i)));
 end
 
+% imshow(uint8(im_test(:, :, :, 12)))
+% figure
+% imshow(uint8(im))
+
 % compute PSNR for the illuminance channel
 test_rmse = zeros(length(pics), 1);
+test_psnr = zeros(length(pics), 1);
+test_ssim = zeros(length(pics), 1);
 for i=1:length(pics)
-    test_rmse(i) = compute_rmse(im, im_test(:, :, :, i));
+%     test_rmse(i) = compute_rmse(im, im_test(:, :, :, i));
+    test_rmse(i) = sqrt(mean((uint8(im)-uint8(im_test(:, :, :, i))).^2,"all"));
+    test_psnr(i) = psnr (uint8(im),uint8(im_test(:, :, :, i)));
+    test_ssim(i) = ssim (uint8(im),uint8(im_test(:, :, :, i)));
 end
 test_rmse
+test_psnr
+test_ssim
 
 
-test_qssim = zeros(length(pics), 1);
-for i=1:length(pics)
-    [test_qssim(i), ~] = qssim(im, im_test(:, :, :, i));
-end
-test_qssim
+% test_qssim = zeros(length(pics), 1);
+% for i=1:length(pics)
+%     [test_qssim(i), ~] = qssim(im, im_test(:, :, :, i));
+% end
+% test_qssim
 % [qssim_sp,~] = qssim(im, im_h);
 % [qssim_in,~] = qssim(im, im_b);
 

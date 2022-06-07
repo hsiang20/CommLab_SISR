@@ -28,7 +28,7 @@ X = X./repmat(sqrt(sum(X.^2, 1)), hDim+lDim, 1);
 idx = randperm(size(X, 2));
 
 % dictionary training
-[D] = reg_sparse_coding(X, dict_size, [], 0, lambda, 40);
+[D] = reg_sparse_coding(X, dict_size, [], 0, lambda, 1);
 
 Dh = D(1:hDim, :);
 Dl = D(hDim+1:end, :);
@@ -40,5 +40,5 @@ Dl = D(hDim+1:end, :);
 patch_size = sqrt(size(Dh, 1));
 
 % dict_path = ['Dictionary_new/D_' num2str(dict_size) '_' num2str(lambda) '_' num2str(patch_size) '_s' num2str(upscale) '.mat' ];
-dict_path = 'Dictionary_new/test_dict.mat';
+dict_path = 'Dictionary_new/coupled_dict.mat';
 save(dict_path, 'Dh', 'Dl');
