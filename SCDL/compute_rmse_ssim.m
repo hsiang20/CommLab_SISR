@@ -12,8 +12,9 @@ pics = {'Data/Testing/Lena128_res.png',...
     'Data/Testing/Lena128_unity_res.png',...
     'Data/Testing/Lenna_adaptive_interpolation_high.png',...
     'Data/Testing/Lenna_adaptive_interpolation_low.png',...
-    'Data/Testing/Lena_high_adapt.png'...,
-    'Data/Testing/Lena_coupled_10000.png'...
+    'Data/Testing/Lena_high_adapt.png',...,
+    'Data/Testing/Lena_coupled_10000.png',...
+    'Data/Testing/Lena128_rand_dict_human_face.png'...
     };
 im_test = zeros(512, 512, 3, length(pics));
 % size(im_test)
@@ -38,6 +39,20 @@ end
 test_rmse
 test_psnr
 test_ssim
+
+HR_img_R = im_test(:, :, :, 13); % best
+
+HR_img_R_FT = 20*log10(abs(fftshift(fft2(HR_img_R))));
+r_max=max(HR_img_R_FT,[],"all");
+r_min=min(HR_img_R_FT,[],"all");
+L=256;
+a=(L-1)./(r_max-r_min);
+b=-a.*r_min;
+HR_img_R_FT=a.*HR_img_R_FT+b;
+
+figure ; 
+imshow(uint8(abs(HR_img_R_FT)))
+title(" 2D FFT of HR Image using adaptive + sparse coding")
 
 
 % test_qssim = zeros(length(pics), 1);
