@@ -42,7 +42,7 @@ test_ssim
 
 HR_img_R = im_test(:, :, :, 13); % best
 
-HR_img_R_FT = 20*log10(abs(fftshift(fft2(HR_img_R))));
+HR_img_R_FT = 20*log10(abs(fftshift(fft2(HR_img_R(:, :, 1)))));
 r_max=max(HR_img_R_FT,[],"all");
 r_min=min(HR_img_R_FT,[],"all");
 L=256;
